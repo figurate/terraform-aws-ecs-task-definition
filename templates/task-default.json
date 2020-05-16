@@ -1,0 +1,23 @@
+[
+  {
+    "name": "${ServiceName}",
+    "image": "${ServiceImage}",
+    "cpu": ${ServiceCPU},
+    "memory": ${ServiceMemory},
+    "essential": true,
+    "portMappings": [
+      {
+        "containerPort": ${ContainerPort},
+        "hostPort": ${ContainerPort}
+      }
+    ],
+    "logConfiguration": {
+      "logDriver": "awslogs",
+      "options": {
+        "awslogs-region": "${LogRegion}",
+        "awslogs-group": "${LogGroup}",
+        "awslogs-stream-prefix": "${ServiceName}"
+      }
+    }${MountPoints}
+  }
+]

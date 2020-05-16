@@ -1,0 +1,5 @@
+{
+  "sourceVolume": "${MountVolume}",
+  "containerPath": "${MountPath}",
+  "readOnly": ${MountReadOnly}
+}
