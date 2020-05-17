@@ -51,7 +51,7 @@ data "template_file" "task_definition" {
 
 resource "aws_ecs_task_definition" "task_definition" {
   container_definitions = data.template_file.task_definition.rendered
-  family                = "${var.name}-${var.type}"
+  family                = join("-", compact([var.namespace, var.name, var.type]))
   network_mode          = var.network_mode
   task_role_arn         = data.aws_iam_role.task.arn
   execution_role_arn    = var.execution_role != "" ? data.aws_iam_role.execution[0].arn : null

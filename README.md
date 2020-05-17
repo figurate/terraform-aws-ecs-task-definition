@@ -23,7 +23,7 @@ No requirements.
 | log\_group | Name of the CloudWatch Log Group for service logging | `any` | n/a | yes |
 | memory | Required memory for the service | `number` | `256` | no |
 | name | A name to identify the ECS service | `any` | n/a | yes |
-| namespace | The namespace to use for service discovery (leave blank for default namespace) | `string` | `""` | no |
+| namespace | Provides a context for the intended deployment of the Task Definition (e.g. environment, etc.) | `string` | `""` | no |
 | network\_mode | Network mode for service containers (bridge\|host\|awsvpc) | `string` | `"bridge"` | no |
 | port | Published port for ECS service | `number` | n/a | yes |
 | proxy\_image | Docker image for AppMesh proxy | `string` | `"aws-appmesh-envoy"` | no |

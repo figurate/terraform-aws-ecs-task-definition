@@ -68,7 +68,7 @@ variable "execution_role" {
 }
 
 variable "namespace" {
-  description = "The namespace to use for service discovery (leave blank for default namespace)"
+  description = "Provides a context for the intended deployment of the Task Definition (e.g. environment, etc.)"
   default     = ""
 }
 
