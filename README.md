@@ -1,3 +1,9 @@
+# ![AWS](aws-logo.png) ECS Task Definition
+
+Purpose: Provision an ECS Task Definition in AWS.
+
+Rationale: Apply standards provide templates for Task Definitions.
+
 ## Requirements
 
 No requirements.
@@ -24,7 +30,7 @@ No requirements.
 | memory | Required memory for the service | `number` | `256` | no |
 | name | A name to identify the ECS service | `any` | n/a | yes |
 | namespace | Provides a context for the intended deployment of the Task Definition (e.g. environment, etc.) | `string` | `""` | no |
-| network\_mode | Network mode for service containers (bridge\|host\|awsvpc) | `string` | `"bridge"` | no |
+| network\_mode | Network mode for service containers (available options: `bridge`, `host`, `awsvpc`) | `string` | `"bridge"` | no |
 | port | Published port for ECS service | `number` | n/a | yes |
 | proxy\_image | Docker image for AppMesh proxy | `string` | `"aws-appmesh-envoy"` | no |
 | proxy\_image\_tag | Docker image tag for AppMesh proxy | `string` | `"v1.12.2.1-prod"` | no |

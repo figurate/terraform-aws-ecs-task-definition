@@ -1,3 +1,10 @@
+/**
+ * # ![AWS](aws-logo.png) ECS Task Definition
+ *
+ * Purpose: Provision an ECS Task Definition in AWS.
+ *
+ * Rationale: Apply standards provide templates for Task Definitions.
+ */
 data "aws_iam_role" "task" {
   name = var.task_role
 }

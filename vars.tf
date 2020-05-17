@@ -49,7 +49,7 @@ variable "launch_type" {
 }
 
 variable "network_mode" {
-  description = "Network mode for service containers (bridge|host|awsvpc)"
+  description = "Network mode for service containers (available options: `bridge`, `host`, `awsvpc`)"
   default     = "bridge"
 }
 
