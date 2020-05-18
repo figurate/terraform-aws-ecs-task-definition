@@ -12,7 +12,7 @@ data "aws_iam_role" "task" {
 }
 
 data "aws_iam_role" "execution" {
-  count = var.execution_role != "" ? 1 : 0
+  count = var.execution_role != null ? 1 : 0
   name  = var.execution_role
 }
 
@@ -23,10 +23,6 @@ data "aws_ecr_repository" "image_repo" {
 data "aws_ecr_repository" "proxy_image_repo" {
   count = var.proxy_image != "" ? 1 : 0
   name  = var.proxy_image
-}
-
-data "aws_cloudwatch_log_group" "service" {
-  name = var.log_group
 }
 
 data "aws_efs_file_system" "efs_volumes" {
@@ -42,7 +38,7 @@ data "template_file" "task_definition" {
     "image": "$${ServiceImage}",
     "essential": true,
     "cpu": $${ServiceCPU},
-    "memory": $${ServiceMemory},
+    "memory": $${ServiceMemory}
     $${Ports}$${Logging}$${Environment}$${MountPoints}
   }
 ]
@@ -53,7 +49,7 @@ EOF
     ServiceCPU    = var.cpu
     ServiceMemory = var.memory
     Ports         = length(var.ports) > 0 ? ",\n\"portMappings\": [\n\t ${join(",\n", local.rendered_ports)} ]" : ""
-    Logging       = "\"logConfiguration\": ${data.template_file.logging.rendered}"
+    Logging       = ",\n\"logConfiguration\": ${data.template_file.logging.rendered}"
     Environment   = length(var.task_environment) > 0 ? ",\n\"environment\": [\n\t ${join(",\n", local.rendered_environment)} ]" : ""
     MountPoints   = length(var.efs_volumes) > 0 ? ",\n\"mountPoints\": [\n\t ${join(",\n", local.rendered_volumes)} ]" : ""
   }
@@ -64,7 +60,7 @@ resource "aws_ecs_task_definition" "task_definition" {
   family                = join("-", compact([var.namespace, var.name, var.type]))
   network_mode          = var.network_mode
   task_role_arn         = data.aws_iam_role.task.arn
-  execution_role_arn    = var.execution_role != "" ? data.aws_iam_role.execution[0].arn : null
+  execution_role_arn    = var.execution_role != null ? data.aws_iam_role.execution[0].arn : null
   dynamic "volume" {
     for_each = var.efs_volumes
     content {

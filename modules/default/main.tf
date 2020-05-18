@@ -1,7 +1,7 @@
 module "task_definition" {
   source = "../.."
 
-  execution_role = ""
+  execution_role = null
   image = var.image
   image_tag = var.image_tag
   log_group = var.log_group
