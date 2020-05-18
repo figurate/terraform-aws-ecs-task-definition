@@ -31,16 +31,6 @@ variable "memory" {
   default     = 256
 }
 
-variable "launch_type" {
-  description = "Launch an EC2 or FARGATE service"
-  default     = "ec2"
-}
-
-variable "network_mode" {
-  description = "Network mode for service containers (available options: `bridge`, `host`, `awsvpc`)"
-  default     = "bridge"
-}
-
 variable "tasks_desired" {
   description = "Suggested number of tasks for the ECS service"
   type        = number
@@ -49,6 +39,10 @@ variable "tasks_desired" {
 
 variable "task_role" {
   description = "Name of the IAM Role assumed by ECS Tasks"
+}
+
+variable "execution_role" {
+  description = "Name of the IAM Role assumed by ECS Tasks for initialisation"
 }
 
 variable "namespace" {

@@ -30,7 +30,7 @@ variable "ports" {
   description = "A map of published ports for the ECS task"
   type        = map(number)
   default = {
-    8080 = 8080
+    (8080) = 8080
   }
 }
 
@@ -47,7 +47,7 @@ variable "memory" {
 }
 
 variable "launch_type" {
-  description = "Launch an EC2 or FARGATE service"
+  description = "Launch an `EC2` or `FARGATE` service"
   default     = "ec2"
 }
 

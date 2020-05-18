@@ -6,7 +6,7 @@ module "task_definition" {
   image_tag = "latest"
   log_group = "ecs/example-log-group"
   name = "example"
-  ports = { "80" = 80 }
+  ports = { (80) = 80 }
   task_role = "ecs-blueprint-role"
   task_environment = {
     SERVER_NAME = "www.example.com"
