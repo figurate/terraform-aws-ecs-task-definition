@@ -32,9 +32,29 @@ data "aws_efs_file_system" "efs_volumes" {
   creation_token = each.key
 }
 
+data "template_file" "environment" {
+  for_each = var.task_environment
+  template = <<EOF
+{
+  "name": "$${Name}",
+  "value": "$${Value}"
+}
+EOF
+  vars = {
+    Name  = each.key
+    Value = each.value
+  }
+}
+
 data "template_file" "volumes" {
   for_each = var.efs_volumes
-  template = file("${path.module}/templates/volume.json")
+  template = <<EOF
+{
+  "sourceVolume": "$${MountVolume}",
+  "containerPath": "$${MountPath}",
+  "readOnly": $${MountReadOnly}
+}
+EOF
   vars = {
     MountVolume   = each.key
     MountPath     = each.value
@@ -52,6 +72,7 @@ data "template_file" "task_definition" {
     ContainerPort = var.port
     LogGroup      = data.aws_cloudwatch_log_group.service.name
     LogRegion     = "ap-southeast-2"
+    Environment   = length(var.task_environment) > 0 ? ",\n\"environment\": [\n\t ${join(",\n", data.template_file.environment[*].rendered)} ]" : ""
     MountPoints   = length(var.efs_volumes) > 0 ? ",\n\"mountPoints\": [\n\t ${join(",\n", data.template_file.volumes[*].rendered)} ]" : ""
   }
 }

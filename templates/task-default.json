@@ -18,6 +18,6 @@
         "awslogs-group": "${LogGroup}",
         "awslogs-stream-prefix": "${ServiceName}"
       }
-    }${MountPoints}
+    }${Environment}${MountPoints}
   }
 ]

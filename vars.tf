@@ -81,6 +81,12 @@ variable "log_group" {
   description = "Name of the CloudWatch Log Group for service logging"
 }
 
+variable "task_environment" {
+  description = "A map of environment variables configured on the primary container"
+  type        = map(string)
+  default     = {}
+}
+
 variable "efs_volumes" {
   description = "A map of creation tokens and mount paths for volumes to mount on the container"
   type        = map(string)

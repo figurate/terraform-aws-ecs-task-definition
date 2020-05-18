@@ -34,6 +34,7 @@ No requirements.
 | port | Published port for ECS service | `number` | n/a | yes |
 | proxy\_image | Docker image for AppMesh proxy | `string` | `"aws-appmesh-envoy"` | no |
 | proxy\_image\_tag | Docker image tag for AppMesh proxy | `string` | `"v1.12.2.1-prod"` | no |
+| task\_environment | A map of environment variables configured on the primary container | `map(string)` | `{}` | no |
 | task\_role | Name of the IAM Role assumed by ECS Tasks | `any` | n/a | yes |
 | tasks\_desired | Suggested number of tasks for the ECS service | `number` | `1` | no |
 | type | Specify the task definition template to apply | `string` | `"default"` | no |
