@@ -24,7 +24,7 @@ data "template_file" "logging" {
 }
 EOF
   vars = {
-    LogGroup  = data.aws_cloudwatch_log_group.service.name
+    LogGroup  = var.log_group
     LogRegion = data.aws_region.current.name
     LogPrefix = var.name
   }
