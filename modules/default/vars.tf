@@ -11,9 +11,12 @@ variable "image_tag" {
   default     = "latest"
 }
 
-variable "port" {
-  description = "Published port for ECS service"
-  type        = number
+variable "ports" {
+  description = "A map of published ports for the ECS task"
+  type        = map(number)
+  default = {
+    8080 = 8080
+  }
 }
 
 variable "cpu" {
@@ -34,7 +37,7 @@ variable "launch_type" {
 }
 
 variable "network_mode" {
-  description = "Network mode for service containers (bridge|host|awsvpc)"
+  description = "Network mode for service containers (available options: `bridge`, `host`, `awsvpc`)"
   default     = "bridge"
 }
 
@@ -49,7 +52,7 @@ variable "task_role" {
 }
 
 variable "namespace" {
-  description = "The namespace to use for service discovery (leave blank for default namespace)"
+  description = "Provides a context for the intended deployment of the Task Definition (e.g. environment, etc.)"
   default     = ""
 }
 
@@ -60,6 +63,12 @@ variable "health_check" {
 
 variable "log_group" {
   description = "Name of the CloudWatch Log Group for service logging"
+}
+
+variable "task_environment" {
+  description = "A map of environment variables configured on the primary container"
+  type        = map(string)
+  default     = {}
 }
 
 variable "efs_volumes" {

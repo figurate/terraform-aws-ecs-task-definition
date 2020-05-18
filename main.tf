@@ -5,6 +5,8 @@
  *
  * Rationale: Apply standards provide templates for Task Definitions.
  */
+data "aws_region" "current" {}
+
 data "aws_iam_role" "task" {
   name = var.task_role
 }
@@ -32,46 +34,26 @@ data "aws_efs_file_system" "efs_volumes" {
   creation_token = each.key
 }
 
-data "template_file" "environment" {
-  for_each = var.task_environment
-  template = <<EOF
-{
-  "name": "$${Name}",
-  "value": "$${Value}"
-}
-EOF
-  vars = {
-    Name  = each.key
-    Value = each.value
-  }
-}
-
-data "template_file" "volumes" {
-  for_each = var.efs_volumes
-  template = <<EOF
-{
-  "sourceVolume": "$${MountVolume}",
-  "containerPath": "$${MountPath}",
-  "readOnly": $${MountReadOnly}
-}
-EOF
-  vars = {
-    MountVolume   = each.key
-    MountPath     = each.value
-    MountReadOnly = var.volumes_readonly
-  }
-}
-
 data "template_file" "task_definition" {
-  template = file(format("${path.module}/templates/task-%s.json", var.type))
+  template = <<EOF
+[
+  {
+    "name": "$${ServiceName}",
+    "image": "$${ServiceImage}",
+    "essential": true,
+    "cpu": $${ServiceCPU},
+    "memory": $${ServiceMemory},
+    $${Ports}$${Logging}$${Environment}$${MountPoints}
+  }
+]
+EOF
   vars = {
     ServiceName   = var.name
     ServiceImage  = join(":", [data.aws_ecr_repository.image_repo.repository_url, var.image_tag])
     ServiceCPU    = var.cpu
     ServiceMemory = var.memory
-    ContainerPort = var.port
-    LogGroup      = data.aws_cloudwatch_log_group.service.name
-    LogRegion     = "ap-southeast-2"
+    Ports         = length(var.ports) > 0 ? ",\n\"portMappings\": [\n\t ${join(",\n", local.rendered_ports)} ]" : ""
+    Logging       = "\"logConfiguration\": ${data.template_file.logging.rendered}"
     Environment   = length(var.task_environment) > 0 ? ",\n\"environment\": [\n\t ${join(",\n", local.rendered_environment)} ]" : ""
     MountPoints   = length(var.efs_volumes) > 0 ? ",\n\"mountPoints\": [\n\t ${join(",\n", local.rendered_volumes)} ]" : ""
   }

@@ -26,9 +26,12 @@ variable "proxy_image_tag" {
   default     = "v1.12.2.1-prod"
 }
 
-variable "port" {
-  description = "Published port for ECS service"
-  type        = number
+variable "ports" {
+  description = "A map of published ports for the ECS task"
+  type        = map(number)
+  default = {
+    8080 = 8080
+  }
 }
 
 variable "cpu" {
@@ -99,6 +102,7 @@ variable "volumes_readonly" {
 }
 
 locals {
+  rendered_ports       = [for v in data.template_file.ports : v.rendered]
   rendered_environment = [for v in data.template_file.environment : v.rendered]
   rendered_volumes     = [for v in data.template_file.volumes : v.rendered]
 }
