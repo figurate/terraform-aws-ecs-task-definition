@@ -5,10 +5,12 @@ module "task_definition" {
   image = "nginx"
   image_tag = "latest"
   log_group = "ecs/example-log-group"
-  name = "example"
   ports = { (80) = 80 }
   task_role = "ecs-blueprint-role"
   task_environment = {
     SERVER_NAME = "www.example.com"
   }
+  namespace = "example"
+  name = "nginx"
+  type = "blueprint"
 }

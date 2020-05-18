@@ -3,8 +3,8 @@ variable "name" {
 }
 
 variable "type" {
-  description = "Specify the task definition template to apply"
-  default     = "default"
+  description = "A suffix applied to the family to indicate sub-module type"
+  default     = ""
 }
 
 variable "image" {

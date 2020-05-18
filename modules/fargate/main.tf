@@ -1,6 +1,7 @@
 module "task_definition" {
   source = "../.."
 
+  type = "fargate"
   execution_role = var.execution_role
   image = var.image
   image_tag = var.image_tag

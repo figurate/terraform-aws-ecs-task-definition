@@ -25,7 +25,7 @@ No requirements.
 | health\_check | The path used for health check of the service | `string` | `"/"` | no |
 | image | Docker image for ECS service | `any` | n/a | yes |
 | image\_tag | Docker image tag for ECS service | `string` | `"latest"` | no |
-| launch\_type | Launch an EC2 or FARGATE service | `string` | `"ec2"` | no |
+| launch\_type | Launch an `EC2` or `FARGATE` service | `string` | `"ec2"` | no |
 | log\_group | Name of the CloudWatch Log Group for service logging | `any` | n/a | yes |
 | memory | Required memory for the service | `number` | `256` | no |
 | name | A name to identify the ECS service | `any` | n/a | yes |
