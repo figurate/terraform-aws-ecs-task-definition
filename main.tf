@@ -72,8 +72,8 @@ data "template_file" "task_definition" {
     ContainerPort = var.port
     LogGroup      = data.aws_cloudwatch_log_group.service.name
     LogRegion     = "ap-southeast-2"
-    Environment   = length(var.task_environment) > 0 ? ",\n\"environment\": [\n\t ${join(",\n", data.template_file.environment[*].rendered)} ]" : ""
-    MountPoints   = length(var.efs_volumes) > 0 ? ",\n\"mountPoints\": [\n\t ${join(",\n", data.template_file.volumes[*].rendered)} ]" : ""
+    Environment   = length(var.task_environment) > 0 ? ",\n\"environment\": [\n\t ${join(",\n", local.rendered_environment)} ]" : ""
+    MountPoints   = length(var.efs_volumes) > 0 ? ",\n\"mountPoints\": [\n\t ${join(",\n", local.rendered_volumes)} ]" : ""
   }
 }
 

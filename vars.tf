@@ -97,3 +97,8 @@ variable "volumes_readonly" {
   description = "Indicates whether persistent volumes are mounted read-only"
   default     = true
 }
+
+locals {
+  rendered_environment = [for v in data.template_file.environment : v.rendered]
+  rendered_volumes     = [for v in data.template_file.volumes : v.rendered]
+}
