@@ -37,7 +37,7 @@ No requirements.
 | task\_environment | A map of environment variables configured on the primary container | `map(string)` | `{}` | no |
 | task\_role | Name of the IAM Role assumed by ECS Tasks | `any` | n/a | yes |
 | tasks\_desired | Suggested number of tasks for the ECS service | `number` | `1` | no |
-| type | Specify the task definition template to apply | `string` | `"default"` | no |
+| type | A suffix applied to the family to indicate sub-module type | `string` | `""` | no |
 | volumes\_readonly | Indicates whether persistent volumes are mounted read-only | `bool` | `true` | no |
 
 ## Outputs
