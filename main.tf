@@ -44,7 +44,7 @@ data "template_file" "task_definition" {
 ]
 EOF
   vars = {
-    ServiceName   = var.name
+    ServiceName   = join("-", split("/", var.image))
     ServiceImage  = join(":", [data.aws_ecr_repository.image_repo.repository_url, var.image_tag])
     ServiceCPU    = var.cpu
     ServiceMemory = var.memory
