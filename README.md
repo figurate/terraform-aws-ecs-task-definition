@@ -36,6 +36,7 @@ No requirements.
 | proxy\_image\_tag | Docker image tag for AppMesh proxy | `string` | `"v1.12.2.1-prod"` | no |
 | task\_environment | A map of environment variables configured on the primary container | `map(string)` | `{}` | no |
 | task\_role | Name of the IAM Role assumed by ECS Tasks | `any` | n/a | yes |
+| task\_secrets | A map of sensitive environment variables configured on the primary container | `map(string)` | `{}` | no |
 | tasks\_desired | Suggested number of tasks for the ECS service | `number` | `1` | no |
 | type | A suffix applied to the family to indicate sub-module type | `string` | `""` | no |
 | volumes\_readonly | Indicates whether persistent volumes are mounted read-only | `bool` | `true` | no |

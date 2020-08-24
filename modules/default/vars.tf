@@ -71,6 +71,12 @@ variable "task_environment" {
   default     = {}
 }
 
+variable "task_secrets" {
+  description = "A map of sensitive environment variables configured on the primary container"
+  type        = map(string)
+  default     = {}
+}
+
 variable "efs_volumes" {
   description = "A map of creation tokens and mount paths for volumes to mount on the container"
   type        = map(string)

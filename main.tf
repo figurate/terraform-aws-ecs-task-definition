@@ -39,7 +39,7 @@ data "template_file" "task_definition" {
     "essential": true,
     "cpu": $${ServiceCPU},
     "memory": $${ServiceMemory}
-    $${Ports}$${Logging}$${Environment}$${MountPoints}
+    $${Ports}$${Logging}$${Environment}$${Secrets}$${MountPoints}
   }
 ]
 EOF
@@ -51,6 +51,7 @@ EOF
     Ports         = length(var.ports) > 0 ? ",\n\"portMappings\": [\n\t ${join(",\n", local.rendered_ports)} ]" : ""
     Logging       = ",\n\"logConfiguration\": ${data.template_file.logging.rendered}"
     Environment   = length(var.task_environment) > 0 ? ",\n\"environment\": [\n\t ${join(",\n", local.rendered_environment)} ]" : ""
+    Secrets       = length(var.task_secrets) > 0 ? ",\n\"secrets\": [\n\t ${join(",\n", local.rendered_secrets)} ]" : ""
     MountPoints   = length(var.efs_volumes) > 0 ? ",\n\"mountPoints\": [\n\t ${join(",\n", local.rendered_volumes)} ]" : ""
   }
 }

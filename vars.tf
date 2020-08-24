@@ -90,6 +90,12 @@ variable "task_environment" {
   default     = {}
 }
 
+variable "task_secrets" {
+  description = "A map of sensitive environment variables configured on the primary container"
+  type        = map(string)
+  default     = {}
+}
+
 variable "efs_volumes" {
   description = "A map of creation tokens and mount paths for volumes to mount on the container"
   type        = map(string)
@@ -104,5 +110,6 @@ variable "volumes_readonly" {
 locals {
   rendered_ports       = [for v in data.template_file.ports : v.rendered]
   rendered_environment = [for v in data.template_file.environment : v.rendered]
+  rendered_secrets     = [for v in data.template_file.secrets : v.rendered]
   rendered_volumes     = [for v in data.template_file.volumes : v.rendered]
 }

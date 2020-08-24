@@ -23,6 +23,7 @@ No provider.
 | ports | A map of published ports for the ECS task | `map(number)` | <pre>{<br>  "8080": 8080<br>}</pre> | no |
 | task\_environment | A map of environment variables configured on the primary container | `map(string)` | `{}` | no |
 | task\_role | Name of the IAM Role assumed by ECS Tasks | `any` | n/a | yes |
+| task\_secrets | A map of sensitive environment variables configured on the primary container | `map(string)` | `{}` | no |
 | tasks\_desired | Suggested number of tasks for the ECS service | `number` | `1` | no |
 | volumes\_readonly | Indicates whether persistent volumes are mounted read-only | `bool` | `true` | no |
 

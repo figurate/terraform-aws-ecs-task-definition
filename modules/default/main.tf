@@ -16,6 +16,7 @@ module "task_definition" {
   namespace        = var.namespace
   tasks_desired    = var.tasks_desired
   task_environment = var.task_environment
+  task_secrets     = var.task_secrets
   efs_volumes      = var.efs_volumes
   volumes_readonly = var.volumes_readonly
 }

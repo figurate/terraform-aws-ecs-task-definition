@@ -44,6 +44,20 @@ EOF
   }
 }
 
+data "template_file" "secrets" {
+  for_each = var.task_secrets
+  template = <<EOF
+{
+  "name": "$${Name}",
+  "valueFrom": "$${ParameterArn}"
+}
+EOF
+  vars = {
+    Name         = each.key
+    ParameterArn = each.value
+  }
+}
+
 data "template_file" "volumes" {
   for_each = var.efs_volumes
   template = <<EOF
