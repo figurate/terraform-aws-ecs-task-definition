@@ -58,6 +58,24 @@ EOF
   }
 }
 
+data "template_file" "health_check" {
+  for_each = length(var.health_check_command) > 0 ? [1] : []
+  template = <<EOF
+{
+  "command": $${Command},
+  "interval": $${Interval},
+  "timeout": $${Timeout},
+  "retries": $${Retries}
+}
+EOF
+  vars = {
+    Command  = jsonencode(var.health_check_command)
+    Interval = var.health_check_interval
+    Timeout  = var.health_check_timeout
+    Retries  = var.health_check_retries
+  }
+}
+
 data "template_file" "volumes" {
   for_each = var.efs_volumes
   template = <<EOF

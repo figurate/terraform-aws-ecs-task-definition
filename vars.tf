@@ -75,9 +75,25 @@ variable "namespace" {
   default     = ""
 }
 
-variable "health_check" {
-  description = "The path used for health check of the service"
-  default     = "/"
+variable "health_check_command" {
+  description = "The command used for health check of the primary container"
+  type        = list(string)
+  default     = []
+}
+
+variable "health_check_interval" {
+  description = "The interval (seconds) between health checks of the primary container"
+  default     = 30
+}
+
+variable "health_check_timeout" {
+  description = "The timeout (seconds) of health checks on the primary container"
+  default     = 2
+}
+
+variable "health_check_retries" {
+  description = "The number of retries of health checks on the primary container"
+  default     = 3
 }
 
 variable "log_group" {
@@ -108,8 +124,9 @@ variable "volumes_readonly" {
 }
 
 locals {
-  rendered_ports       = [for v in data.template_file.ports : v.rendered]
-  rendered_environment = [for v in data.template_file.environment : v.rendered]
-  rendered_secrets     = [for v in data.template_file.secrets : v.rendered]
-  rendered_volumes     = [for v in data.template_file.volumes : v.rendered]
+  rendered_ports        = [for v in data.template_file.ports : v.rendered]
+  rendered_environment  = [for v in data.template_file.environment : v.rendered]
+  rendered_secrets      = [for v in data.template_file.secrets : v.rendered]
+  rendered_health_check = [for v in data.template_file.health_check : v.rendered]
+  rendered_volumes      = [for v in data.template_file.volumes : v.rendered]
 }

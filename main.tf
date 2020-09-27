@@ -1,6 +1,8 @@
 /**
  * # ![AWS](aws-logo.png) ECS Task Definition
  *
+ * ![AWS ECS Task Definition](aws_ecs_task_definition.png)
+ *
  * Purpose: Provision an ECS Task Definition in AWS.
  *
  * Rationale: Apply standards provide templates for Task Definitions.
@@ -39,7 +41,7 @@ data "template_file" "task_definition" {
     "essential": true,
     "cpu": $${ServiceCPU},
     "memory": $${ServiceMemory}
-    $${Ports}$${Logging}$${Environment}$${Secrets}$${MountPoints}
+    $${Ports}$${Logging}$${Environment}$${Secrets}$${HealthCheck}$${MountPoints}
   }
 ]
 EOF
@@ -52,6 +54,7 @@ EOF
     Logging       = ",\n\"logConfiguration\": ${data.template_file.logging.rendered}"
     Environment   = length(var.task_environment) > 0 ? ",\n\"environment\": [\n\t ${join(",\n", local.rendered_environment)} ]" : ""
     Secrets       = length(var.task_secrets) > 0 ? ",\n\"secrets\": [\n\t ${join(",\n", local.rendered_secrets)} ]" : ""
+    HealthCheck   = length(var.health_check_command) > 0 ? ",\n\"healthCheck\": ${local.rendered_health_check}" : ""
     MountPoints   = length(var.efs_volumes) > 0 ? ",\n\"mountPoints\": [\n\t ${join(",\n", local.rendered_volumes)} ]" : ""
   }
 }

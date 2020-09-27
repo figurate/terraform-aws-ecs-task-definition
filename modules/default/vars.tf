@@ -32,7 +32,7 @@ variable "memory" {
 }
 
 variable "launch_type" {
-  description = "Launch an EC2 or FARGATE service"
+  description = "Launch an `EC2` or `FARGATE` service"
   default     = "ec2"
 }
 
@@ -56,9 +56,25 @@ variable "namespace" {
   default     = ""
 }
 
-variable "health_check" {
-  description = "The path used for health check of the service"
-  default     = "/"
+variable "health_check_command" {
+  description = "The command used for health check of the primary container"
+  type        = list(string)
+  default     = []
+}
+
+variable "health_check_interval" {
+  description = "The interval (seconds) between health checks of the primary container"
+  default     = 30
+}
+
+variable "health_check_timeout" {
+  description = "The timeout (seconds) of health checks on the primary container"
+  default     = 2
+}
+
+variable "health_check_retries" {
+  description = "The number of retries of health checks on the primary container"
+  default     = 3
 }
 
 variable "log_group" {

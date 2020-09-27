@@ -12,10 +12,13 @@ No provider.
 |------|-------------|------|---------|:--------:|
 | cpu | Required vCPU units for the service | `number` | `256` | no |
 | efs\_volumes | A map of creation tokens and mount paths for volumes to mount on the container | `map(string)` | `{}` | no |
-| health\_check | The path used for health check of the service | `string` | `"/"` | no |
+| health\_check\_command | The command used for health check of the primary container | `list(string)` | `[]` | no |
+| health\_check\_interval | The interval (seconds) between health checks of the primary container | `number` | `30` | no |
+| health\_check\_retries | The number of retries of health checks on the primary container | `number` | `3` | no |
+| health\_check\_timeout | The timeout (seconds) of health checks on the primary container | `number` | `2` | no |
 | image | Docker image for ECS service | `any` | n/a | yes |
 | image\_tag | Docker image tag for ECS service | `string` | `"latest"` | no |
-| launch\_type | Launch an EC2 or FARGATE service | `string` | `"ec2"` | no |
+| launch\_type | Launch an `EC2` or `FARGATE` service | `string` | `"ec2"` | no |
 | log\_group | Name of the CloudWatch Log Group for service logging | `any` | n/a | yes |
 | memory | Required memory for the service | `number` | `256` | no |
 | name | A name to identify the ECS service | `any` | n/a | yes |
