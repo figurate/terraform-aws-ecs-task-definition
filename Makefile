@@ -6,6 +6,8 @@ TERRAFORM_DOCS=docker run --rm -v "${PWD}:/work" tmknom/terraform-docs
 
 CHECKOV=docker run -t -v "${PWD}:/work" bridgecrew/checkov
 
+DIAGRAMS=docker run -t -v "${PWD}:/work" figurate/diagrams python
+
 .PHONY: all clean validate test docs format
 
 all: validate test docs format
@@ -25,10 +27,13 @@ test: validate
 		$(CHECKOV) -d /work/modules/default && \
 		$(CHECKOV) -d /work/modules/fargate
 
+diagram:
+	$(DIAGRAMS) diagram.py
+
 example:
 	$(TERRAFORM) init modules/example && $(TERRAFORM) plan modules/example
 
-docs:
+docs: diagram
 	$(TERRAFORM_DOCS) markdown ./ >./README.md && \
 		$(TERRAFORM_DOCS) markdown ./modules/daemon >./modules/daemon/README.md
 		$(TERRAFORM_DOCS) markdown ./modules/default >./modules/default/README.md

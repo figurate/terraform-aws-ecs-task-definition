@@ -1,5 +1,7 @@
 # ![AWS](aws-logo.png) ECS Task Definition
 
+![AWS ECS Task Definition](aws\_ecs\_task\_definition.png)
+
 Purpose: Provision an ECS Task Definition in AWS.
 
 Rationale: Apply standards provide templates for Task Definitions.
@@ -22,7 +24,10 @@ No requirements.
 | cpu | Required vCPU units for the service | `number` | `256` | no |
 | efs\_volumes | A map of creation tokens and mount paths for volumes to mount on the container | `map(string)` | `{}` | no |
 | execution\_role | Name of the IAM Role assumed by ECS Tasks for initialisation | `any` | n/a | yes |
-| health\_check | The path used for health check of the service | `string` | `"/"` | no |
+| health\_check\_command | The command used for health check of the primary container | `list(string)` | `[]` | no |
+| health\_check\_interval | The interval (seconds) between health checks of the primary container | `number` | `30` | no |
+| health\_check\_retries | The number of retries of health checks on the primary container | `number` | `3` | no |
+| health\_check\_timeout | The timeout (seconds) of health checks on the primary container | `number` | `2` | no |
 | image | Docker image for ECS service | `any` | n/a | yes |
 | image\_tag | Docker image tag for ECS service | `string` | `"latest"` | no |
 | launch\_type | Launch an `EC2` or `FARGATE` service | `string` | `"ec2"` | no |
