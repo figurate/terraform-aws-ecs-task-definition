@@ -12,6 +12,7 @@ No provider.
 |------|-------------|------|---------|:--------:|
 | cpu | Required vCPU units for the service | `number` | `256` | no |
 | efs\_volumes | A map of creation tokens and mount paths for volumes to mount on the container | `map(string)` | `{}` | no |
+| execution\_role | Name of the IAM Role assumed by ECS Tasks for initialisation | `any` | `null` | no |
 | health\_check\_command | The command used for health check of the primary container | `list(string)` | `[]` | no |
 | health\_check\_interval | The interval (seconds) between health checks of the primary container | `number` | `30` | no |
 | health\_check\_retries | The number of retries of health checks on the primary container | `number` | `3` | no |

@@ -51,6 +51,11 @@ variable "task_role" {
   description = "Name of the IAM Role assumed by ECS Tasks"
 }
 
+variable "execution_role" {
+  description = "Name of the IAM Role assumed by ECS Tasks for initialisation"
+  default     = null
+}
+
 variable "namespace" {
   description = "Provides a context for the intended deployment of the Task Definition (e.g. environment, etc.)"
   default     = ""
