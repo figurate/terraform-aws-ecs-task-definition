@@ -54,7 +54,7 @@ EOF
     Logging       = ",\n\"logConfiguration\": ${data.template_file.logging.rendered}"
     Environment   = length(var.task_environment) > 0 ? ",\n\"environment\": [\n\t ${join(",\n", local.rendered_environment)} ]" : ""
     Secrets       = length(var.task_secrets) > 0 ? ",\n\"secrets\": [\n\t ${join(",\n", local.rendered_secrets)} ]" : ""
-    HealthCheck   = length(var.health_check_command) > 0 ? ",\n\"healthCheck\": ${local.rendered_health_check}" : ""
+    HealthCheck   = length(var.health_check_command) > 0 ? ",\n\"healthCheck\": ${local.rendered_health_check[0]}" : ""
     MountPoints   = length(var.efs_volumes) > 0 ? ",\n\"mountPoints\": [\n\t ${join(",\n", local.rendered_volumes)} ]" : ""
   }
 }

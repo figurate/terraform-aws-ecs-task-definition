@@ -59,7 +59,7 @@ EOF
 }
 
 data "template_file" "health_check" {
-  for_each = length(var.health_check_command) > 0 ? [1] : []
+  count    = length(var.health_check_command) > 0 ? 1 : 0
   template = <<EOF
 {
   "command": $${Command},
