@@ -10,8 +10,8 @@ module "task_definition" {
   task_environment = {
     SERVER_NAME = "www.example.com"
   }
-  namespace            = "example"
-  name                 = "nginx"
-  type                 = "blueprint"
+  namespace            = var.namespace
+  name                 = var.name
+  type                 = "default"
   health_check_command = ["CMD-SHELL", "curl -f http://localhost/ || exit 1"]
 }
