@@ -1,5 +1,5 @@
 data "template_file" "ports" {
-  for_each = var.ports
+  count    = length(var.ports)
   template = <<EOF
 {
   "containerPort": $${ContainerPort},
@@ -7,8 +7,8 @@ data "template_file" "ports" {
 }
 EOF
   vars = {
-    ContainerPort = each.key
-    HostPort      = each.value
+    ContainerPort = var.ports[count.index][0]
+    HostPort      = var.ports[count.index][1]
   }
 }
 
@@ -59,7 +59,7 @@ EOF
 }
 
 data "template_file" "health_check" {
-  count    = length(var.health_check_command) > 0 ? 1 : 0
+  count    = var.health_check != null ? 1 : 0
   template = <<EOF
 {
   "command": $${Command},
@@ -69,15 +69,15 @@ data "template_file" "health_check" {
 }
 EOF
   vars = {
-    Command  = jsonencode(var.health_check_command)
-    Interval = var.health_check_interval
-    Timeout  = var.health_check_timeout
-    Retries  = var.health_check_retries
+    Command  = jsonencode(var.health_check[0])
+    Interval = var.health_check[1]
+    Timeout  = var.health_check[2]
+    Retries  = var.health_check[3]
   }
 }
 
 data "template_file" "volumes" {
-  for_each = var.efs_volumes
+  count    = length(var.efs_volumes)
   template = <<EOF
 {
   "sourceVolume": "$${MountVolume}",
@@ -86,8 +86,8 @@ data "template_file" "volumes" {
 }
 EOF
   vars = {
-    MountVolume   = each.key
-    MountPath     = each.value
-    MountReadOnly = var.volumes_readonly
+    MountVolume   = var.efs_volumes[count.index][0]
+    MountPath     = var.efs_volumes[count.index][1]
+    MountReadOnly = var.efs_volumes[count.index][2]
   }
 }

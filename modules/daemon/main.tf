@@ -15,8 +15,8 @@ module "task_definition" {
   network_mode     = var.network_mode
   namespace        = var.namespace
   tasks_desired    = var.tasks_desired
+  health_check     = var.health_check
   task_environment = var.task_environment
   task_secrets     = var.task_secrets
   efs_volumes      = var.efs_volumes
-  volumes_readonly = var.volumes_readonly
 }

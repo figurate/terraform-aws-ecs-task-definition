@@ -13,10 +13,8 @@ variable "image_tag" {
 
 variable "ports" {
   description = "A map of published ports for the ECS task"
-  type        = map(number)
-  default = {
-    (8080) = 8080
-  }
+  type        = list(tuple([number, number]))
+  default     = []
 }
 
 variable "cpu" {
@@ -52,8 +50,9 @@ variable "namespace" {
 }
 
 variable "health_check" {
-  description = "The path used for health check of the service"
-  default     = "/"
+  description = "The command, interval, timeout and number of retries for health check of the primary container"
+  type        = tuple([list(string), number, number, number])
+  default     = null
 }
 
 variable "log_group" {
@@ -74,11 +73,6 @@ variable "task_secrets" {
 
 variable "efs_volumes" {
   description = "A map of creation tokens and mount paths for volumes to mount on the container"
-  type        = map(string)
-  default     = {}
-}
-
-variable "volumes_readonly" {
-  description = "Indicates whether persistent volumes are mounted read-only"
-  default     = true
+  type        = list(tuple([string, string, bool]))
+  default     = []
 }

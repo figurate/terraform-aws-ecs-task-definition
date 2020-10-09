@@ -1,6 +1,6 @@
 variable "name" {
   description = "A name to identify the ECS service"
-  default = "nginx"
+  default     = "nginx"
 }
 
 variable "namespace" {

@@ -28,10 +28,8 @@ variable "proxy_image_tag" {
 
 variable "ports" {
   description = "A map of published ports for the ECS task"
-  type        = map(number)
-  default = {
-    (8080) = 8080
-  }
+  type        = list(tuple([number, number]))
+  default     = []
 }
 
 variable "cpu" {
@@ -75,25 +73,10 @@ variable "namespace" {
   default     = ""
 }
 
-variable "health_check_command" {
-  description = "The command used for health check of the primary container"
-  type        = list(string)
-  default     = []
-}
-
-variable "health_check_interval" {
-  description = "The interval (seconds) between health checks of the primary container"
-  default     = 30
-}
-
-variable "health_check_timeout" {
-  description = "The timeout (seconds) of health checks on the primary container"
-  default     = 2
-}
-
-variable "health_check_retries" {
-  description = "The number of retries of health checks on the primary container"
-  default     = 3
+variable "health_check" {
+  description = "The command, interval, timeout and number of retries for health check of the primary container"
+  type        = tuple([list(string), number, number, number])
+  default     = null
 }
 
 variable "log_group" {
@@ -114,19 +97,13 @@ variable "task_secrets" {
 
 variable "efs_volumes" {
   description = "A map of creation tokens and mount paths for volumes to mount on the container"
-  type        = map(string)
-  default     = {}
-}
-
-variable "volumes_readonly" {
-  description = "Indicates whether persistent volumes are mounted read-only"
-  default     = true
+  type        = list(tuple([string, string, bool]))
+  default     = []
 }
 
 locals {
-  rendered_ports        = [for v in data.template_file.ports : v.rendered]
-  rendered_environment  = [for v in data.template_file.environment : v.rendered]
-  rendered_secrets      = [for v in data.template_file.secrets : v.rendered]
-  rendered_health_check = [for v in data.template_file.health_check : v.rendered]
-  rendered_volumes      = [for v in data.template_file.volumes : v.rendered]
+  rendered_ports       = [for v in data.template_file.ports : v.rendered]
+  rendered_environment = [for v in data.template_file.environment : v.rendered]
+  rendered_secrets     = [for v in data.template_file.secrets : v.rendered]
+  rendered_volumes     = [for v in data.template_file.volumes : v.rendered]
 }

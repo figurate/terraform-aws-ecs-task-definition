@@ -17,6 +17,6 @@ module "task_definition" {
   tasks_desired    = var.tasks_desired
   task_environment = var.task_environment
   task_secrets     = var.task_secrets
+  health_check     = var.health_check
   efs_volumes      = var.efs_volumes
-  volumes_readonly = var.volumes_readonly
 }
