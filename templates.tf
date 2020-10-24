@@ -76,8 +76,8 @@ EOF
   }
 }
 
-data "template_file" "volumes" {
-  count    = length(var.efs_volumes)
+data "template_file" "mounts" {
+  count    = length(var.mounts)
   template = <<EOF
 {
   "sourceVolume": "$${MountVolume}",
@@ -86,8 +86,8 @@ data "template_file" "volumes" {
 }
 EOF
   vars = {
-    MountVolume   = var.efs_volumes[count.index][0]
-    MountPath     = var.efs_volumes[count.index][1]
-    MountReadOnly = var.efs_volumes[count.index][2]
+    MountVolume   = var.mounts[count.index][0]
+    MountPath     = var.mounts[count.index][1]
+    MountReadOnly = var.mounts[count.index][2]
   }
 }

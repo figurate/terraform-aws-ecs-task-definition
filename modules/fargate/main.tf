@@ -18,5 +18,7 @@ module "task_definition" {
   task_environment = var.task_environment
   task_secrets     = var.task_secrets
   health_check     = var.health_check
+  volumes          = var.volumes
   efs_volumes      = var.efs_volumes
+  mounts           = var.mounts
 }

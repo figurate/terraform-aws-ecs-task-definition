@@ -29,7 +29,7 @@ data "aws_ecr_repository" "proxy_image_repo" {
 
 data "aws_efs_file_system" "efs_volumes" {
   count          = length(var.efs_volumes)
-  creation_token = var.efs_volumes[count.index][0]
+  creation_token = var.efs_volumes[count.index]
 }
 
 data "template_file" "task_definition" {
@@ -55,7 +55,7 @@ EOF
     Environment   = length(var.task_environment) > 0 ? ",\n\"environment\": [\n\t ${join(",\n", local.rendered_environment)} ]" : ""
     Secrets       = length(var.task_secrets) > 0 ? ",\n\"secrets\": [\n\t ${join(",\n", local.rendered_secrets)} ]" : ""
     HealthCheck   = var.health_check != null ? ",\n\"healthCheck\": ${data.template_file.health_check[0].rendered}" : ""
-    MountPoints   = length(var.efs_volumes) > 0 ? ",\n\"mountPoints\": [\n\t ${join(",\n", local.rendered_volumes)} ]" : ""
+    MountPoints   = length(var.mounts) > 0 ? ",\n\"mountPoints\": [\n\t ${join(",\n", local.rendered_mounts)} ]" : ""
   }
 }
 
@@ -65,6 +65,14 @@ resource "aws_ecs_task_definition" "task_definition" {
   network_mode          = var.network_mode
   task_role_arn         = data.aws_iam_role.task.arn
   execution_role_arn    = var.execution_role != null ? data.aws_iam_role.execution[0].arn : null
+
+  dynamic "volume" {
+    for_each = var.volumes
+    content {
+      name      = volume.value[0]
+      host_path = volume.value[1]
+    }
+  }
 
   dynamic "volume" {
     for_each = data.aws_efs_file_system.efs_volumes

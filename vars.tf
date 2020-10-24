@@ -95,8 +95,20 @@ variable "task_secrets" {
   default     = {}
 }
 
+variable "volumes" {
+  description = "A list of volume names and host paths to mount on the container"
+  type        = list(tuple([string, string]))
+  default     = []
+}
+
 variable "efs_volumes" {
-  description = "A map of creation tokens and mount paths for volumes to mount on the container"
+  description = "A list of creation tokens of EFS volumes to mount on the container"
+  type        = list(string)
+  default     = []
+}
+
+variable "mounts" {
+  description = "A list of volume ids and mount paths for the container"
   type        = list(tuple([string, string, bool]))
   default     = []
 }
@@ -105,5 +117,5 @@ locals {
   rendered_ports       = [for v in data.template_file.ports : v.rendered]
   rendered_environment = [for v in data.template_file.environment : v.rendered]
   rendered_secrets     = [for v in data.template_file.secrets : v.rendered]
-  rendered_volumes     = [for v in data.template_file.volumes : v.rendered]
+  rendered_mounts      = [for v in data.template_file.mounts : v.rendered]
 }
