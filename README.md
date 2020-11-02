@@ -49,4 +49,5 @@ No requirements.
 | Name | Description |
 |------|-------------|
 | arn | The ARN of the Task Definition |
+| family | n/a |
 

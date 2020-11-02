@@ -33,4 +33,5 @@ No provider.
 | Name | Description |
 |------|-------------|
 | arn | The ARN of the Task Definition |
+| family | n/a |
 

@@ -1,5 +1,5 @@
 SHELL:=/bin/bash
-TERRAFORM_VERSION=0.12.28
+TERRAFORM_VERSION=0.13.4
 TERRAFORM=docker run --rm -v "${PWD}:/work" -v "${HOME}:/root" -e AWS_DEFAULT_REGION=$(AWS_DEFAULT_REGION) -e http_proxy=$(http_proxy) --net=host -w /work hashicorp/terraform:$(TERRAFORM_VERSION)
 
 TERRAFORM_DOCS=docker run --rm -v "${PWD}:/work" tmknom/terraform-docs
@@ -26,15 +26,9 @@ validate:
 		$(TERRAFORM) init modules/fargate && $(TERRAFORM) validate modules/fargate
 
 test: validate
-	$(CHECKOV) -d /work && \
-		$(CHECKOV) -d /work/modules/daemon && \
-		$(CHECKOV) -d /work/modules/default && \
-		$(CHECKOV) -d /work/modules/fargate
+	$(CHECKOV) -d /work
 
-	$(TFSEC) /work && \
-		$(TFSEC) /work/modules/daemon && \
-		$(TFSEC) /work/modules/default && \
-		$(TFSEC) /work/modules/fargate
+	$(TFSEC) /work
 
 diagram:
 	$(DIAGRAMS) diagram.py
