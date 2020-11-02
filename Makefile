@@ -6,11 +6,11 @@ TERRAFORM=docker run --rm -v "${PWD}:/work" -v "${HOME}:/root" -e AWS_DEFAULT_RE
 
 TERRAFORM_DOCS=docker run --rm -v "${PWD}:/work" tmknom/terraform-docs
 
-CHECKOV=docker run --rm -t -v "${PWD}:/work" bridgecrew/checkov
+CHECKOV=docker run --rm -v "${PWD}:/work" bridgecrew/checkov
 
-TFSEC=docker run --rm -it -v "${PWD}:/work" liamg/tfsec
+TFSEC=docker run --rm -v "${PWD}:/work" liamg/tfsec
 
-DIAGRAMS=docker run -t -v "${PWD}:/work" figurate/diagrams python
+DIAGRAMS=docker run -v "${PWD}:/work" figurate/diagrams python
 
 EXAMPLE=$(wordlist 2, $(words $(MAKECMDGOALS)), $(MAKECMDGOALS))
 
