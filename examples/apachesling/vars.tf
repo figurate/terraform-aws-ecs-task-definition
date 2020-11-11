@@ -12,6 +12,13 @@ variable "image_tag" {
   default     = "latest"
 }
 
+variable "ports" {
+  description = "A list of port mappings to publish"
+  default = [
+    [8080, 8080], [9090, 9090]
+  ]
+}
+
 variable "volumes" {
   description = "A list of volume names and host paths to mount on the container"
   type        = list(tuple([string, string]))
@@ -27,5 +34,7 @@ variable "mounts" {
 variable "task_environment" {
   description = "A map of environment variables configured on the primary container"
   type        = map(string)
-  default     = {}
+  default     = {
+    JAVA_OPTS = "-Dsling.fileinstall.dir=/opt/sling/bundles -javaagent:/opt/jmx_exporter/jmx_prometheus_javaagent-0.14.0.jar=9090:/opt/jmx_exporter/jmx_prometheus.yml"
+  }
 }

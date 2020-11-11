@@ -11,7 +11,7 @@ module "task_definition" {
   image_tag        = var.image_tag
   memory           = 768
   log_group        = aws_cloudwatch_log_group.log.name
-  ports            = [[8080, 8080]]
+  ports            = var.ports
   task_role        = "ecs-task-role"
   namespace        = var.namespace
   name             = var.name
