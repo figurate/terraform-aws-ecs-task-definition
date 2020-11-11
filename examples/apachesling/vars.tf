@@ -5,6 +5,7 @@ variable "name" {
 
 variable "namespace" {
   description = "Provides a context for the intended deployment of the Task Definition (e.g. environment, etc.)"
+  default = "example"
 }
 
 variable "image_tag" {
@@ -14,6 +15,7 @@ variable "image_tag" {
 
 variable "ports" {
   description = "A list of port mappings to publish"
+  type = list(tuple([number, number]))
   default = [
     [8080, 8080], [9090, 9090]
   ]

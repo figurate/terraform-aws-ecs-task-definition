@@ -25,3 +25,9 @@ jobs:
       # Runs a single command using the runners shell
       - name: Run make
         run: make
+
+      - name: Verify example apachesling
+        run: make example apachesling
+
+      - name: Verify example nginx
+        run: make example nginx
