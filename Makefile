@@ -47,8 +47,7 @@ format:
 		$(TERRAFORM) fmt -list=true ./modules/default && \
 		$(TERRAFORM) fmt -list=true ./modules/fargate && \
 		$(TERRAFORM) fmt -list=true ./examples/nginx && \
-		$(TERRAFORM) fmt -list=true ./examples/apachesling && \
-		$(TERRAFORM) fmt -list=true ./examples/haproxy
+		$(TERRAFORM) fmt -list=true ./examples/apachesling
 
 example:
 	$(TERRAFORM) init examples/$(EXAMPLE) && $(TERRAFORM) plan -input=false examples/$(EXAMPLE)
