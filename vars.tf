@@ -95,6 +95,12 @@ variable "task_secrets" {
   default     = {}
 }
 
+variable "docker_labels" {
+  description = "A map of docker labels to attach to the container definition"
+  type        = map(any)
+  default     = {}
+}
+
 variable "volumes" {
   description = "A list of volume names and host paths to mount on the container"
   type        = list(tuple([string, string]))

@@ -22,6 +22,7 @@ No requirements.
 | Name | Description | Type | Default | Required |
 |------|-------------|------|---------|:--------:|
 | cpu | Required vCPU units for the service | `number` | `256` | no |
+| docker\_labels | A map of docker labels to attach to the container definition | `map(any)` | `{}` | no |
 | efs\_volumes | A list of creation tokens of EFS volumes to mount on the container | `list(string)` | `[]` | no |
 | execution\_role | Name of the IAM Role assumed by ECS Tasks for initialisation | `any` | n/a | yes |
 | health\_check | The command, interval, timeout and number of retries for health check of the primary container | `tuple([list(string), number, number, number])` | `null` | no |

@@ -12,6 +12,7 @@ module "task_definition" {
   memory           = 768
   log_group        = aws_cloudwatch_log_group.log.name
   ports            = var.ports
+  network_mode     = var.network_mode
   task_role        = "ecs-task-role"
   namespace        = var.namespace
   name             = var.name
@@ -20,4 +21,5 @@ module "task_definition" {
   volumes          = var.volumes
   mounts           = var.mounts
   task_environment = var.task_environment
+  docker_labels    = var.docker_labels
 }

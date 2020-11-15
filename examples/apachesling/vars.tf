@@ -5,7 +5,7 @@ variable "name" {
 
 variable "namespace" {
   description = "Provides a context for the intended deployment of the Task Definition (e.g. environment, etc.)"
-  default = "example"
+  default     = "example"
 }
 
 variable "image_tag" {
@@ -15,10 +15,15 @@ variable "image_tag" {
 
 variable "ports" {
   description = "A list of port mappings to publish"
-  type = list(tuple([number, number]))
+  type        = list(tuple([number, number]))
   default = [
     [8080, 8080], [9090, 9090]
   ]
+}
+
+variable "network_mode" {
+  description = "Network mode for service containers (available options: `bridge`, `host`, `awsvpc`)"
+  default     = "bridge"
 }
 
 variable "volumes" {
@@ -36,7 +41,16 @@ variable "mounts" {
 variable "task_environment" {
   description = "A map of environment variables configured on the primary container"
   type        = map(string)
-  default     = {
+  default = {
     JAVA_OPTS = "-Dsling.fileinstall.dir=/opt/sling/bundles -javaagent:/opt/jmx_exporter/jmx_prometheus_javaagent-0.14.0.jar=9090:/opt/jmx_exporter/jmx_prometheus.yml"
+  }
+}
+
+variable "docker_labels" {
+  description = "A map of docker labels to attach to the container definition"
+  type        = map(any)
+  default = {
+    ECS_PROMETHEUS_EXPORTER_PORT : "9090"
+    Java_EMF_Metrics : "true"
   }
 }

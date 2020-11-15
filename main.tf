@@ -40,10 +40,12 @@ data "template_file" "task_definition" {
     "image": "$${ServiceImage}",
     "essential": true,
     "cpu": $${ServiceCPU},
-    "memory": $${ServiceMemory}
+    "memory": $${ServiceMemory},
+    "dockerLabels": $${DockerLabels}
     $${Ports}$${Logging}$${Environment}$${Secrets}$${HealthCheck}$${MountPoints}
   }
 ]
+
 EOF
   vars = {
     ServiceName   = join("-", split("/", var.image))
@@ -51,6 +53,7 @@ EOF
     ServiceCPU    = var.cpu
     ServiceMemory = var.memory
     Ports         = length(var.ports) > 0 ? ",\n\"portMappings\": [\n\t ${join(",\n", local.rendered_ports)} ]" : ""
+    DockerLabels  = jsonencode(var.docker_labels)
     Logging       = ",\n\"logConfiguration\": ${data.template_file.logging.rendered}"
     Environment   = length(var.task_environment) > 0 ? ",\n\"environment\": [\n\t ${join(",\n", local.rendered_environment)} ]" : ""
     Secrets       = length(var.task_secrets) > 0 ? ",\n\"secrets\": [\n\t ${join(",\n", local.rendered_secrets)} ]" : ""
