@@ -21,6 +21,11 @@ variable "ports" {
   ]
 }
 
+variable "network_mode" {
+  description = "Network mode for service containers (available options: `bridge`, `host`, `awsvpc`)"
+  default     = "bridge"
+}
+
 variable "volumes" {
   description = "A list of volume names and host paths to mount on the container"
   type        = list(tuple([string, string]))
@@ -36,5 +41,13 @@ variable "mounts" {
 variable "task_environment" {
   description = "A map of environment variables configured on the primary container"
   type        = map(string)
+  default = {
+    NGINX_ENVSUBST_TEMPLATE_DIR = "/opt/nginx/templates"
+  }
+}
+
+variable "docker_labels" {
+  description = "A map of docker labels to attach to the container definition"
+  type        = map(any)
   default     = {}
 }

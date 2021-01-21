@@ -48,6 +48,6 @@ variable "docker_labels" {
   description = "A map of docker labels to attach to the container definition"
   type        = map(any)
   default = {
-    ECS_PROMETHEUS_EXPORTER_PORT : "8404"
+    ECS_PROMETHEUS_EXPORTER_PORT = "8404"
   }
 }
