@@ -18,12 +18,12 @@ variable "image_tag" {
 
 variable "proxy_image" {
   description = "Docker image for AppMesh proxy"
-  default     = "aws-appmesh-envoy"
+  default     = null
 }
 
 variable "proxy_image_tag" {
   description = "Docker image tag for AppMesh proxy"
-  default     = "v1.12.2.1-prod"
+  default     = "latest"
 }
 
 variable "ports" {

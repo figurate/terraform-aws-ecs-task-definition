@@ -23,7 +23,7 @@ data "aws_ecr_repository" "image_repo" {
 }
 
 data "aws_ecr_repository" "proxy_image_repo" {
-  count = var.proxy_image != "" ? 1 : 0
+  count = var.proxy_image != null ? 1 : 0
   name  = var.proxy_image
 }
 

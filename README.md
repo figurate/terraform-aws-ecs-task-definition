@@ -36,8 +36,8 @@ No requirements.
 | namespace | Provides a context for the intended deployment of the Task Definition (e.g. environment, etc.) | `string` | `""` | no |
 | network\_mode | Network mode for service containers (available options: `bridge`, `host`, `awsvpc`) | `string` | `"bridge"` | no |
 | ports | A map of published ports for the ECS task | `list(tuple([number, number]))` | `[]` | no |
-| proxy\_image | Docker image for AppMesh proxy | `string` | `"aws-appmesh-envoy"` | no |
-| proxy\_image\_tag | Docker image tag for AppMesh proxy | `string` | `"v1.12.2.1-prod"` | no |
+| proxy\_image | Docker image for AppMesh proxy | `any` | `null` | no |
+| proxy\_image\_tag | Docker image tag for AppMesh proxy | `string` | `"latest"` | no |
 | task\_environment | A map of environment variables configured on the primary container | `map(string)` | `{}` | no |
 | task\_role | Name of the IAM Role assumed by ECS Tasks | `any` | n/a | yes |
 | task\_secrets | A map of sensitive environment variables configured on the primary container | `map(string)` | `{}` | no |
