@@ -1,7 +1,7 @@
 SHELL:=/bin/bash
 AWS_DEFAULT_REGION?=ap-southeast-2
 
-TERRAFORM_VERSION=0.13.4
+TERRAFORM_VERSION=0.15.2
 TERRAFORM=docker run --rm -v "${PWD}:/work" -v "${HOME}:/root" -e AWS_DEFAULT_REGION=$(AWS_DEFAULT_REGION) -e http_proxy=$(http_proxy) --net=host -w /work hashicorp/terraform:$(TERRAFORM_VERSION)
 
 TERRAFORM_DOCS=docker run --rm -v "${PWD}:/work" tmknom/terraform-docs
@@ -23,9 +23,9 @@ clean:
 
 validate:
 	$(TERRAFORM) init && $(TERRAFORM) validate && \
-		$(TERRAFORM) init modules/daemon && $(TERRAFORM) validate modules/daemon
-		$(TERRAFORM) init modules/default && $(TERRAFORM) validate modules/default
-		$(TERRAFORM) init modules/fargate && $(TERRAFORM) validate modules/fargate
+		$(TERRAFORM) -chdir=modules/daemon init && $(TERRAFORM) -chdir=modules/daemon validate
+		$(TERRAFORM) -chdir=modules/default init && $(TERRAFORM) -chdir=modules/default validate
+		$(TERRAFORM) -chdir=modules/fargate init && $(TERRAFORM) -chdir=modules/fargate validate
 
 test: validate
 	$(CHECKOV) -d /work
