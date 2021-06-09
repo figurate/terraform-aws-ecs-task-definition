@@ -1,6 +1,6 @@
 # ![AWS](aws-logo.png) ECS Task Definition
 
-![main workflow](https://github.com/figurate/terraform-aws-ecs-task-definition/.github/actions/workflows/main.yml/badge.svg)
+![main workflow](https://github.com/figurate/terraform-aws-ecs-task-definition/actions/workflows/main.yml/badge.svg)
 
 ![AWS ECS Task Definition](aws\_ecs\_task\_definition.png)
 
