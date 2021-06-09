@@ -1,5 +1,7 @@
 # ![AWS](aws-logo.png) ECS Task Definition
 
+![main workflow](https://github.com/github/docs/actions/workflows/main.yml/badge.svg)
+
 ![AWS ECS Task Definition](aws\_ecs\_task\_definition.png)
 
 Purpose: Provision an ECS Task Definition in AWS.
