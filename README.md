@@ -1,12 +1,12 @@
 # ![AWS](aws-logo.png) ECS Task Definition
 
+[![CI](https://github.com/figurate/terraform-aws-ecs-task-definition/actions/workflows/main.yml/badge.svg)](https://github.com/figurate/terraform-aws-ecs-task-definition/actions/workflows/main.yml)
+
 ![AWS ECS Task Definition](aws\_ecs\_task\_definition.png)
 
 Purpose: Provision an ECS Task Definition in AWS.
 
 Rationale: Apply standards provide templates for Task Definitions.
-
-![main workflow](https://github.com/figurate/terraform-aws-ecs-task-definition/actions/workflows/main.yml/badge.svg)
 
 ## Requirements
 
