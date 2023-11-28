@@ -12,10 +12,7 @@ clean:
 	rm -rf .terraform/
 
 validate:
-	$(TERRAFORM) init -upgrade && $(TERRAFORM) validate && \
-		$(TERRAFORM) -chdir=modules/daemon init -upgrade && $(TERRAFORM) -chdir=modules/daemon validate
-		$(TERRAFORM) -chdir=modules/default init -upgrade && $(TERRAFORM) -chdir=modules/default validate
-		$(TERRAFORM) -chdir=modules/fargate init -upgrade && $(TERRAFORM) -chdir=modules/fargate validate
+	$(TERRAFORM) init  && $(TERRAFORM) validate
 
 test: validate
 	$(CHECKOV) -d /work
@@ -31,16 +28,10 @@ docs: diagram
 		$(TERRAFORM_DOCS) markdown ./modules/fargate >./modules/fargate/README.md
 
 format:
-	$(TERRAFORM) fmt -list=true ./ && \
-		$(TERRAFORM) fmt -list=true ./modules/daemon && \
-		$(TERRAFORM) fmt -list=true ./modules/default && \
-		$(TERRAFORM) fmt -list=true ./modules/fargate && \
-		$(TERRAFORM) fmt -list=true ./examples/nginx && \
-		$(TERRAFORM) fmt -list=true ./examples/apachesling && \
-		$(TERRAFORM) fmt -list=true ./examples/haproxy
+	$(TERRAFORM) fmt -list=true -recursive
 
 example:
-	$(TERRAFORM) -chdir=examples/$(EXAMPLE) init -upgrade && $(TERRAFORM) -chdir=examples/$(EXAMPLE) plan -input=false
+	$(TERRAFORM) -chdir=examples/$(EXAMPLE) init  && $(TERRAFORM) -chdir=examples/$(EXAMPLE) plan -input=false
 
 release: test
 	git tag $(VERSION) && git push --tags
